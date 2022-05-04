@@ -24,9 +24,8 @@ The Apigee Envoy Quickstart Toolkit for [Apigee protected ASM Envoy Proxies with
     export APIGEE_REMOTE_SRVC_CLI_VERSION=<version for Apigee Remote Service cli for Envoy>
     export APIGEE_REMOTE_SRVC_ENVOY_VERSION=<version for Apigee Remote Service for Envoy>
     ```
-    Latest cli version can be found [here](https://github.com/apigee/apigee-remote-service-cli/releases/tag/v2.0.5)
-    
-    Latest apigee-envoy version can be found [here](https://github.com/apigee/apigee-remote-service-envoy/releases/tag/v2.0.5)
+    Latest cli version can be found **[here](https://github.com/apigee/apigee-remote-service-cli/releases/tag/v2.0.5)**<br />
+    Latest apigee-envoy version can be found **[here](https://github.com/apigee/apigee-remote-service-envoy/releases/tag/v2.0.5)**
 
 4. **Set up local authentication to your project.**
     ```bash
