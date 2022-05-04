@@ -21,8 +21,8 @@ The Apigee Envoy Quickstart Toolkit for [Apigee protected ASM Envoy Proxies with
     export ORG=<apigee-org>
     export ENV=<apigee-env>
     export RUNTIME=<env-group-virtualhost-prefixed with http/https>
-    export APIGEE_REMOTE_SRVC_CLI_VERSION=<[version](https://github.com/apigee/apigee-remote-service-cli/releases/tag/v2.0.5) for Apigee Remote Service cli for Envoy>
-    export APIGEE_REMOTE_SRVC_ENVOY_VERSION=<[version](https://github.com/apigee/apigee-remote-service-envoy/releases/tag/v2.0.5) for Apigee Remote Service for Envoy>
+    export APIGEE_REMOTE_SRVC_CLI_VERSION=<**[version](https://github.com/apigee/apigee-remote-service-cli/releases/tag/v2.0.5)** for Apigee Remote Service cli for Envoy>
+    export APIGEE_REMOTE_SRVC_ENVOY_VERSION=<**[version](https://github.com/apigee/apigee-remote-service-envoy/releases/tag/v2.0.5)** for Apigee Remote Service for Envoy>
     ```
 
 4. **Set up local authentication to your project.**
