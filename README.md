@@ -1,8 +1,12 @@
 # Apigee Envoy PoC Toolkit
 
-The Apigee Envoy PoC Toolkit PoC generator for [Apigee protected ASM Envoy Proxies within Kubernetes Engine](https://cloud.google.com/apigee/docs/api-platform/envoy-adapter/v2.0.x/example-hybrid).
+The Apigee Envoy Quickstart Toolkit for [Apigee protected ASM Envoy Proxies within Kubernetes Engine](https://cloud.google.com/apigee/docs/api-platform/envoy-adapter/v2.0.x/example-hybrid).
+
+![poc-setup](assets/envoy-toolkit.png)
 
 ## Quickstart 
+
+### Installation
 
 1. **[Create a Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects)** and connect it to an existing Billing account.
 
@@ -37,14 +41,19 @@ The Apigee Envoy PoC Toolkit PoC generator for [Apigee protected ASM Envoy Proxi
     unzip apigee-envoy-quickstart-main.zip
     ```
 
-6. **Install PoC:**
+6. **Run to install the quickstart toolkit.**
     ```bash 
-    cd apigee-envoy-quickstart-main
+    cd ${ENVOY_HOME}/apigee-envoy-quickstart-main
     ./aekitctl.sh install
     ```
 
-7. **Run to run the Toolkit.**
-    ```bash 
-    ./aekitctl create
-    ```
+8. **Follow the steps in the output con
 
+
+### Cleanup
+
+1. **Run to cleanup the PoC setup from the GKE and Apigee platform**
+    ```bash
+    cd ${ENVOY_HOME}/apigee-envoy-quickstart-main
+    ./aekitctl delete
+    ```
