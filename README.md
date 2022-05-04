@@ -8,15 +8,7 @@ The Apigee Envoy PoC Toolkit PoC generator for [Apigee protected ASM Envoy Proxi
 
 2. Setup a GKE cluster. Have the cluster enabled with Anthos Service Mesh. Checkout this **[gke poc toolkit](https://github.com/GoogleCloudPlatform/gke-poc-toolkit)** to standup a GKE cluster via automation with ASM enabled.
 
-3. **Download the Apigee Envoy PoC Toolkit binary.** 
-    ```bash
-    mkdir apigee-envoy && cd "$_"
-    export ENVOY_HOME=$(pwd)
-    curl -sLSf -o ./aekitctl.sh https://github.com/ganadurai/apigee-envoy-poc-toolkit/apigee-envoy-poc-toolkit.zip
-    unzip apigee-envoy-poc-toolkit.zip
-    ```
-
-4. Set your GCP Project ID, Apigee platform environment variables. **This toolkit has to be executed in a Linux environment.** 
+3. Set your GCP Project ID, Apigee platform environment variables. **This toolkit has to be executed in a Linux environment.** 
     ```bash
     export PROJECT_ID=<your-project-id>
     export CLUSTER_NAME=<gke-cluster-name>
@@ -29,7 +21,7 @@ The Apigee Envoy PoC Toolkit PoC generator for [Apigee protected ASM Envoy Proxi
     export APIGEE_REMOTE_SRVC_ENVOY_VERSION=<version for Apigee Remote Service for Envoy>
     ```
 
-5. **Set up local authentication to your project.**
+4. **Set up local authentication to your project.**
     ```bash
     gcloud config set project $PROJECT_ID
     gcloud auth application-default login --no-launch-browser
@@ -37,9 +29,17 @@ The Apigee Envoy PoC Toolkit PoC generator for [Apigee protected ASM Envoy Proxi
     export TOKEN=$(gcloud auth print-access-token);echo $TOKEN
     ```
 
+5. **Download the Apigee Envoy PoC Toolkit binary.** 
+    ```bash
+    mkdir apigee-envoy && cd "$_"
+    export ENVOY_HOME=$(pwd)
+    wget -O apigee-envoy-quickstart-main.zip https://github.com/ganadurai/apigee-envoy-quickstart/archive/refs/heads/main.zip
+    unzip apigee-envoy-quickstart-main.zip
+    ```
+
 6. **Install PoC:**
     ```bash 
-    cd apigee-envoy-poc-toolkit
+    cd apigee-envoy-quickstart-main
     ./aekitctl.sh install
     ```
 
