@@ -70,7 +70,7 @@ then
     ./scripts/setup-envoy-filters.sh
 
     printf "\n\nstep 8 : test-apigee-envoy-filter.sh\n"
-    ./scripts/test-apigee-envoy-filter.sh
+    ./scripts/test-istio-apigee-envoy-filter.sh
 
 elif [ $1 == 'delete' ]
 then

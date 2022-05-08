@@ -71,19 +71,23 @@ then
     init;
     echo "Installing istio-apigee-envoy"
     export TEMPLATE="istio-1.12"
+    ./istio-apigee-envoy-install.sh
 elif [ $INSTALL_TYPE == 'istio-apigee-envoy' -a $ACTION == 'delete' ]
 then
     init;
     echo "Deleting istio-apigee-envoy"
+    ./istio-apigee-envoy-delete.sh
 elif [ $INSTALL_TYPE == 'standalone-apigee-envoy' -a $ACTION == 'install' ]
 then
     init;
     echo "Installing standalone-apigee-envoy"
     export TEMPLATE="envoy-1.15"
+    ./standalone-apigee-envoy-install.sh
 elif [ $INSTALL_TYPE == 'standalone-apigee-envoy' -a $ACTION == 'delete' ]
 then
     init;
     echo "Deleting standalone-apigee-envoy"
+    ./standalone-apigee-envoy-delete.sh
 else
     usage;
     exit 1; 

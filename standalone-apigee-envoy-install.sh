@@ -23,4 +23,4 @@ printf "\n\nstep 7 : setup-standalone-envoy.sh\n"
 ./scripts/setup-standalone-envoy.sh
 
 printf "\n\nstep 8 : test-standalone-apigee-envoy-filter.sh\n"
-./scripts/test-apigee-envoy-filter.sh
+./scripts/test-standalone-apigee-envoy-filter.sh
