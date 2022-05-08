@@ -12,6 +12,8 @@ The Apigee Envoy Quickstart Toolkit for [Apigee protected ASM Envoy Proxies with
 
 2. Setup a GKE cluster. Have the cluster enabled with Anthos Service Mesh. Checkout this **[gke poc toolkit](https://github.com/GoogleCloudPlatform/gke-poc-toolkit)** to standup a GKE cluster via automation with ASM enabled.
 
+3. Needed libraries : wget, jq
+
 3. Set your GCP Project ID, Apigee platform environment variables. **This toolkit has to be executed in a Linux environment.** 
     ```bash
     export PROJECT_ID=<your-project-id>
