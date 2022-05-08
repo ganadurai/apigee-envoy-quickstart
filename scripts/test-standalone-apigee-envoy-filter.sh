@@ -15,7 +15,7 @@ echo "Wait for few minutes for the Envoy and Apigee adapter to have the setup co
 
 echo ""
 
-echo curl -i http://localhost:8080/headers -H "Host: httpbin.org"  \
+echo curl -i http://localhost:8080/headers -H "\"Host: httpbin.org\""  \
 -H "\"x-api-key: $CONSUMER_KEY\""
 
 echo ""
