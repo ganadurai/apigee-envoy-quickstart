@@ -23,9 +23,13 @@ init() {
     export ENVOY_CONFIGS_HOME=$CLI_HOME/envoy-configs-and-samples
     export AX_SERVICE_ACCOUNT=$ENVOY_HOME/$ENVOY_AX_SA.json
     export NAMESPACE="apigee"
+}
+
+createDir() {
 
     mkdir $CLI_HOME
     mkdir $REMOTE_SERVICE_HOME
+
 }
 
 PARAMETERS=()
@@ -69,6 +73,7 @@ fi
 if [ $INSTALL_TYPE == 'istio-apigee-envoy' -a $ACTION == 'install' ]
 then
     init;
+    createDir;
     echo "Installing istio-apigee-envoy"
     export TEMPLATE="istio-1.12"
     ./istio-apigee-envoy-install.sh
@@ -80,6 +85,7 @@ then
 elif [ $INSTALL_TYPE == 'standalone-apigee-envoy' -a $ACTION == 'install' ]
 then
     init;
+    createDir;
     echo "Installing standalone-apigee-envoy"
     export TEMPLATE="envoy-1.15"
     ./standalone-apigee-envoy-install.sh
