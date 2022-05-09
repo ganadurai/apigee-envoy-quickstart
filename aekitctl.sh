@@ -15,72 +15,85 @@ usage() {
     exit 1
 }
 
-usage() {
-  echo '';
-  echo 'Usage:';
-  echo './aekitctl.sh --type=istio-apigee-envoy --action=install';
-  echo './aekitctl.sh istio-apigee-envoy delete';
-  echo './aekitctl.sh standalone-apigee-envoy install';
-  echo './aekitctl.sh standalone-apigee-envoy delete';
-  echo '';
+init() {
+    export CLUSTER_CTX="gke_${PROJECT_ID}_${CLUSTER_LOCATION}_${CLUSTER_NAME}"
+    export ENVOY_AX_SA="x-apigee-envoy-adapter-2-sa"
+    export CLI_HOME=$ENVOY_HOME/apigee-remote-service-cli
+    export REMOTE_SERVICE_HOME=$ENVOY_HOME/apigee-remote-service-envoy
+    export ENVOY_CONFIGS_HOME=$CLI_HOME/envoy-configs-and-samples
+    export AX_SERVICE_ACCOUNT=$ENVOY_HOME/$ENVOY_AX_SA.json
+    export NAMESPACE="apigee"
 }
 
-if [[ -z $1 ]]
+createDir() {
+
+    mkdir $CLI_HOME
+    mkdir $REMOTE_SERVICE_HOME
+
+}
+
+PARAMETERS=()
+
+if [[ $# -ne 4 ]]
 then
    usage;
    exit 1;
+fi  
+
+while [[ $# -gt 0 ]]
+do
+    param="$1"
+    case $param in
+        -t|--type)
+        export INSTALL_TYPE="$2"
+        shift
+        shift
+        ;;
+        -a|--action)
+        export ACTION="$2"
+        shift
+        shift
+        ;;
+        *)
+        PARAMETERS+=("$1")
+        shift
+        ;;
+    esac
+done
+ 
+if [[ -z $INSTALL_TYPE ]]; then
+    usage "installation type is a mandatory field"
 fi
 
-export CLUSTER_CTX="gke_${PROJECT_ID}_${CLUSTER_LOCATION}_${CLUSTER_NAME}"
-export ENVOY_AX_SA="x-apigee-envoy-adapter-2-sa"
-export CLI_HOME=$ENVOY_HOME/apigee-remote-service-cli
-export REMOTE_SERVICE_HOME=$ENVOY_HOME/apigee-remote-service-envoy
-export ENVOY_CONFIGS_HOME=$CLI_HOME/envoy-configs-and-samples
-export AX_SERVICE_ACCOUNT=$ENVOY_HOME/$ENVOY_AX_SA.json
-export NAMESPACE="apigee"
+if [[ -z $ACTION ]]; then
+    usage "action is a mandatory field"
+fi
 
-if [ $1 == 'install' ]
+
+if [ $INSTALL_TYPE == 'istio-apigee-envoy' -a $ACTION == 'install' ]
 then
-    echo "Installing apigee envoy PoC setup"
-
-    printf "\n\nstep 1 : validate.sh\n" 
-    mkdir $CLI_HOME
-    mkdir $REMOTE_SERVICE_HOME
-    ./scripts/validate.sh
-
-    printf "\n\nstep 2 : service-accounts.sh\n" 
-    ./scripts/service-accounts.sh
-
-    printf "\n\nstep 3 : prepare-namespace.sh\n"
-    ./scripts/prepare-namespace.sh
-
-    printf "\n\nstep 4 : download-libraries.sh\n"
-    ./scripts/sedownloadtup-libraries.sh
-
-    printf "\n\nstep 5 : setup-libraries.sh\n"
-    ./scripts/setup-libraries.sh
-
-    printf "\n\nstep 6 : setup-istio-envoy.sh\n"
-    ./scripts/setup-istio-envoy.sh
-
-    printf "\n\nstep 6 : setup-apigee.sh\n"
-    ./scripts/setup-apigee.sh
-
-    printf "\n\nstep 7 : setup-envoy-filters.sh\n"
-    ./scripts/setup-envoy-filters.sh
-
-    printf "\n\nstep 8 : test-apigee-envoy-filter.sh\n"
-    ./scripts/test-istio-apigee-envoy-filter.sh
-
-elif [ $1 == 'delete' ]
+    init;
+    createDir;
+    echo "Installing istio-apigee-envoy"
+    export TEMPLATE="istio-1.12"
+    ./istio-apigee-envoy-install.sh
+elif [ $INSTALL_TYPE == 'istio-apigee-envoy' -a $ACTION == 'delete' ]
 then
-    echo "Removing apigee envoy PoC setup"
-
-    printf "\n\nstep 1 : validate.sh\n" 
-    
-    ./scripts/validate.sh
-
-    ./scripts/delete-apigee-envoy-setup.sh
+    init;
+    echo "Deleting istio-apigee-envoy"
+    ./istio-apigee-envoy-delete.sh
+elif [ $INSTALL_TYPE == 'standalone-apigee-envoy' -a $ACTION == 'install' ]
+then
+    init;
+    createDir;
+    echo "Installing standalone-apigee-envoy"
+    export TEMPLATE="envoy-1.15"
+    ./standalone-apigee-envoy-install.sh
+elif [ $INSTALL_TYPE == 'standalone-apigee-envoy' -a $ACTION == 'delete' ]
+then
+    init;
+    echo "Deleting standalone-apigee-envoy"
+    ./standalone-apigee-envoy-delete.sh
 else
     usage;
     exit 1; 
