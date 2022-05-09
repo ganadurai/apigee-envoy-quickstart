@@ -2,7 +2,9 @@
 
 The Apigee Envoy Quickstart Toolkit for [Apigee protected ASM Envoy Proxies within Kubernetes Engine](https://cloud.google.com/apigee/docs/api-platform/envoy-adapter/v2.0.x/example-hybrid).
 
-![poc-setup](assets/envoy-toolkit.png)
+![poc-setup](assets/istio-apigee-envoy.png)
+
+![poc-setup](assets/standalone-apigee-envoy.png)
 
 ## Quickstart 
 
