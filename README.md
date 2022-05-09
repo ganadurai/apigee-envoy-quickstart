@@ -54,16 +54,19 @@ The Apigee Envoy Quickstart Toolkit :
 6. **Run to install the quickstart toolkit.**
     ```bash 
     cd ${ENVOY_HOME}/apigee-envoy-quickstart-main
-    ./aekitctl.sh install
+    ./aekitctl.sh --type <type> --action install
     ```
-
-8. **Follow the steps in the output con
-
+    type (valid values):
+    istio-apigee-envoy
+    standalone-apigee-envoy
 
 ### Cleanup
 
 1. **Run to cleanup the PoC setup from the GKE and Apigee platform**
     ```bash
     cd ${ENVOY_HOME}/apigee-envoy-quickstart-main
-    ./aekitctl delete
+    ./aekitctl.sh --type <type> --action delete
     ```
+    type (valid values):
+    istio-apigee-envoy
+    standalone-apigee-envoy
