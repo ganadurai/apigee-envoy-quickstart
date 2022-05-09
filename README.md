@@ -1,7 +1,7 @@
 # Apigee Envoy PoC Toolkit
 
-The Apigee Envoy Quickstart Toolkit : 
-
+The Apigee Envoy Quickstart Toolkit sets up the Envoy proxies with Apigee adapters. 
+<br/><br/>
 [Apigee protected ASM Envoy Proxies within Kubernetes Engine](https://cloud.google.com/apigee/docs/api-platform/envoy-adapter/v2.0.x/example-hybrid).
 
 ![poc-setup](assets/istio-apigee-envoy.png)
@@ -16,11 +16,11 @@ The Apigee Envoy Quickstart Toolkit :
 
 1. **[Create a Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects)** and connect it to an existing Billing account.
 
-2. Setup a GKE cluster. Have the cluster enabled with Anthos Service Mesh. Checkout this **[gke poc toolkit](https://github.com/GoogleCloudPlatform/gke-poc-toolkit)** to standup a GKE cluster via automation with ASM enabled.
+1. Setup a GKE cluster. Have the cluster enabled with Anthos Service Mesh. Checkout this **[gke poc toolkit](https://github.com/GoogleCloudPlatform/gke-poc-toolkit)** to standup a GKE cluster via automation with ASM enabled.
 
-3. Needed libraries : wget, jq
+1. Needed libraries : wget, jq
 
-3. Set your GCP Project ID, Apigee platform environment variables. **This toolkit has to be executed in a Linux environment.** 
+1. Set your GCP Project ID, Apigee platform environment variables. **This toolkit has to be executed in a Linux environment.** 
     ```bash
     export PROJECT_ID=<your-project-id>
     export CLUSTER_NAME=<gke-cluster-name>
@@ -35,7 +35,7 @@ The Apigee Envoy Quickstart Toolkit :
     Latest cli version can be found **[here](https://github.com/apigee/apigee-remote-service-cli/releases/tag/v2.0.5)**<br />
     Latest apigee-envoy version can be found **[here](https://github.com/apigee/apigee-remote-service-envoy/releases/tag/v2.0.5)**
 
-4. **Set up local authentication to your project.**
+1. **Set up local authentication to your project.**
     ```bash
     gcloud config set project $PROJECT_ID
     gcloud auth application-default login --no-launch-browser
@@ -43,7 +43,7 @@ The Apigee Envoy Quickstart Toolkit :
     export TOKEN=$(gcloud auth print-access-token);echo $TOKEN
     ```
 
-5. **Download the Apigee Envoy PoC Toolkit binary.** 
+1. **Download the Apigee Envoy PoC Toolkit binary.** 
     ```bash
     mkdir apigee-envoy-toolkit && cd "$_"
     export ENVOY_HOME=$(pwd)
@@ -51,7 +51,7 @@ The Apigee Envoy Quickstart Toolkit :
     unzip apigee-envoy-quickstart-main.zip
     ```
 
-6. **Run to install the quickstart toolkit.**
+1. **Run to install the quickstart toolkit.**
     ```bash 
     cd ${ENVOY_HOME}/apigee-envoy-quickstart-main
     ./aekitctl.sh --type <type> --action install
@@ -59,6 +59,8 @@ The Apigee Envoy Quickstart Toolkit :
     type (valid values): <br />
     istio-apigee-envoy <br />
     standalone-apigee-envoy
+
+1. On successful run, it displays the commands (kubeclt run, curl) to validate the traffic intiated to the Envoy endpoints being protected by Apigee Adapter service.
 
 ### Cleanup
 
