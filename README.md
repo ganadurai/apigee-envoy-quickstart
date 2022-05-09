@@ -56,8 +56,8 @@ The Apigee Envoy Quickstart Toolkit :
     cd ${ENVOY_HOME}/apigee-envoy-quickstart-main
     ./aekitctl.sh --type <type> --action install
     ```
-    type (valid values):
-    istio-apigee-envoy
+    type (valid values): <br />
+    istio-apigee-envoy <br />
     standalone-apigee-envoy
 
 ### Cleanup
@@ -67,6 +67,6 @@ The Apigee Envoy Quickstart Toolkit :
     cd ${ENVOY_HOME}/apigee-envoy-quickstart-main
     ./aekitctl.sh --type <type> --action delete
     ```
-    type (valid values):
-    istio-apigee-envoy
+    type (valid values): <br />
+    istio-apigee-envoy <br />
     standalone-apigee-envoy
