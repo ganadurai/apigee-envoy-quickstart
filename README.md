@@ -45,7 +45,7 @@ The Apigee Envoy Quickstart Toolkit :
 
 5. **Download the Apigee Envoy PoC Toolkit binary.** 
     ```bash
-    mkdir apigee-envoy && cd "$_"
+    mkdir apigee-envoy-toolkit && cd "$_"
     export ENVOY_HOME=$(pwd)
     wget -O apigee-envoy-quickstart-main.zip https://github.com/ganadurai/apigee-envoy-quickstart/archive/refs/heads/main.zip
     unzip apigee-envoy-quickstart-main.zip
