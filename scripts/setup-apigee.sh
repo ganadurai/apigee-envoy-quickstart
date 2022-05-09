@@ -29,6 +29,15 @@ curl -H "Authorization: Bearer ${TOKEN}"   -H "Content-Type:application/json"   
             }
             ],
             "quota": {}
+        },
+        {
+            "apiSource": "httpbin.org",
+            "operations": [
+            {
+                "resource": "/headers"
+            }
+            ],
+            "quota": {}
         }
         ],
         "operationConfigType": "remoteservice"

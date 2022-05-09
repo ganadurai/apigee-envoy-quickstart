@@ -1,7 +1,14 @@
 #!/bin/bash
 
-echo "Deleting the namespace - "$NAMESPACE
-kubectl --context=${CLUSTER_CTX} delete namespace $NAMESPACE
+if [ $INSTALL_TYPE == 'istio-apigee-envoy' ]
+then
+    echo "Deleting the namespace - "$NAMESPACE
+    kubectl --context=${CLUSTER_CTX} delete namespace $NAMESPACE
+else
+    echo "Deleting docker containers"
+    docker ps -a --format "{{ json . }}" | jq ' select( .Image | contains("envoyproxy")) | .Names ' | xargs docker rm -f
+    docker ps -a --format "{{ json . }}" | jq ' select( .Image | contains("apigee-envoy-adapter")) | .Names ' | xargs docker rm -f
+fi
 
 echo "Deleting the developer app"
 curl -H "Authorization: Bearer ${TOKEN}" -X DELETE "https://apigee.googleapis.com/v1/organizations/${ORG}/developers/test-envoy@google.com/apps/envoy-adapter-app-2"
@@ -22,8 +29,8 @@ gcloud iam service-accounts delete $ENVOY_AX_SA@$APIGEE_PROJECT_ID.iam.gservicea
 --project=$APIGEE_PROJECT_ID --quiet
 
 echo "Deleting the directory"
-rm -R $CLI_HOME
-rm -R $REMOTE_SERVICE_HOME
+rm -Rf $CLI_HOME
+rm -Rf $REMOTE_SERVICE_HOME
 rm $ENVOY_HOME/*.tar.gz
 rm $AX_SERVICE_ACCOUNT
 
