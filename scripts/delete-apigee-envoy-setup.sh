@@ -14,6 +14,8 @@ then
     gcloud iam service-accounts delete $ENVOY_AX_SA@$APIGEE_PROJECT_ID.iam.gserviceaccount.com \
     --project=$APIGEE_PROJECT_ID --quiet
 
+    rm $AX_SERVICE_ACCOUNT
+
 else
     echo "Deleting docker containers"
     docker ps -a --format "{{ json . }}" | jq ' select( .Image | contains("envoyproxy")) | .Names ' | xargs docker rm -f
@@ -35,5 +37,4 @@ echo "Deleting the directory"
 rm -Rf $CLI_HOME
 rm -Rf $REMOTE_SERVICE_HOME
 rm $ENVOY_HOME/*.tar.gz
-rm $AX_SERVICE_ACCOUNT
 
