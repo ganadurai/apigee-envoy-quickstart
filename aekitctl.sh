@@ -34,7 +34,7 @@ createDir() {
 
 PARAMETERS=()
 
-if [[ $# -ne 4 ]]
+if [[ $# -ne 4 || $# -ne 6 ]]
 then
    usage;
    exit 1;
