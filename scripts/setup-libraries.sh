@@ -5,13 +5,24 @@ set -e
 cd $CLI_HOME
 
 printf "\n\n\nProvisioning the apigee remote service\n"
-$CLI_HOME/apigee-remote-service-cli provision \
---organization $ORG \
---environment $ENV \
---runtime $RUNTIME \
---namespace $NAMESPACE \
---analytics-sa $AX_SERVICE_ACCOUNT \
---token $TOKEN > $CLI_HOME/config.yaml
+
+if [ $INSTALL_TYPE == 'istio-apigee-envoy' ]
+then
+    $CLI_HOME/apigee-remote-service-cli provision \
+    --organization $ORG \
+    --environment $ENV \
+    --runtime $RUNTIME \
+    --namespace $NAMESPACE \
+    --analytics-sa $AX_SERVICE_ACCOUNT \
+    --token $TOKEN > $CLI_HOME/config.yaml
+else
+    $CLI_HOME/apigee-remote-service-cli provision \
+    --organization $ORG \
+    --environment $ENV \
+    --runtime $RUNTIME \
+    --username $USER \
+    --password $PASSWORD > $CLI_HOME/config.yaml
+fi
 
 curl -i -v $RUNTIME/remote-token/certs | grep 200 2>&1 >/dev/null
 RESULT=$?
