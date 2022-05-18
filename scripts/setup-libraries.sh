@@ -19,6 +19,7 @@ else
     $CLI_HOME/apigee-remote-service-cli provision \
     --organization $ORG \
     --environment $ENV \
+    --runtime $RUNTIME \
     --management $MGMT_HOST \
     --username $USER \
     --password $PASSWORD \
