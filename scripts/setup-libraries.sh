@@ -6,7 +6,7 @@ cd $CLI_HOME
 
 printf "\n\n\nProvisioning the apigee remote service\n"
 
-if [ $PLATFORM == 'opdk' ]
+if [ "$PLATFORM" == 'opdk' ]
 then
     $CLI_HOME/apigee-remote-service-cli provision \
     --organization $ORG \

@@ -76,7 +76,7 @@ fi
 
 init;
 
-if [ $PLATFORM == 'opdk' ]
+if [ "$PLATFORM" == 'opdk' ]
 then
     export TOKEN=$(echo -n "$USER":"$PASSWORD" | base64 | tr -d \\r)
     export TOKEN_TYPE="Basic"
