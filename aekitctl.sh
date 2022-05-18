@@ -69,30 +69,42 @@ if [[ -z $ACTION ]]; then
     usage "action is a mandatory field"
 fi
 
+init;
+
+if [ $INSTALL_TYPE == 'standalone-apigee-envoy'
+    export TOKEN=$(echo -n "$USER":"$PASSWORD" | base64 | tr -d \\r)
+    export TOKEN_TYPE="Basic"
+else
+    export TOKEN_TYPE="Bearer"
+    export MGMT_HOST="https://apigee.googleapis.com"
+fi
+
+./scripts/validate.sh
 
 if [ $INSTALL_TYPE == 'istio-apigee-envoy' -a $ACTION == 'install' ]
 then
-    init;
     createDir;
+    ./scripts/validate-istio-setup.sh
     echo "Installing istio-apigee-envoy"
     export TEMPLATE="istio-1.12"
     ./istio-apigee-envoy-install.sh
 elif [ $INSTALL_TYPE == 'istio-apigee-envoy' -a $ACTION == 'delete' ]
 then
-    init;
+    ./scripts/validate-istio-setup.sh
     echo "Deleting istio-apigee-envoy"
     ./istio-apigee-envoy-delete.sh
 elif [ $INSTALL_TYPE == 'standalone-apigee-envoy' -a $ACTION == 'install' ]
 then
-    init;
     createDir;
+    ./scripts/validate-standalone-setup.sh
     echo "Installing standalone-apigee-envoy"
     export TEMPLATE="envoy-1.15"
     ./standalone-apigee-envoy-install.sh
 elif [ $INSTALL_TYPE == 'standalone-apigee-envoy' -a $ACTION == 'delete' ]
 then
-    init;
+    ./scripts/validate-standalone-setup.sh
     echo "Deleting standalone-apigee-envoy"
+    export TOKEN=$(echo "$USER":"$PASSWORD" | base64)
     ./standalone-apigee-envoy-delete.sh
 else
     usage;
