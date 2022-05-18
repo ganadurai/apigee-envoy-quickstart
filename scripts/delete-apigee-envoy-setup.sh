@@ -15,13 +15,14 @@ then
     --project=$APIGEE_PROJECT_ID --quiet
 
     rm $AX_SERVICE_ACCOUNT
+fi
 
-else
+if [ $INSTALL_TYPE == 'standalone-apigee-envoy' ]
+then
     echo "Deleting docker containers"
     docker ps -a --format "{{ json . }}" | jq ' select( .Image | contains("envoyproxy")) | .Names ' | xargs docker rm -f
     docker ps -a --format "{{ json . }}" | jq ' select( .Image | contains("apigee-envoy-adapter")) | .Names ' | xargs docker rm -f
 fi
-
 
 echo "Deleting the developer app"
 echo curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}" -X DELETE "${MGMT_HOST}/v1/organizations/${ORG}/developers/test-envoy@google.com/apps/envoy-adapter-app-2"
