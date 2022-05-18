@@ -16,3 +16,5 @@ if [[ -z $PASSWORD ]]; then
     echo "Environment variable OPDK password credential is not set, please checkout README.md"
     exit 1
 fi
+
+echo "Validation standalone params successful.."

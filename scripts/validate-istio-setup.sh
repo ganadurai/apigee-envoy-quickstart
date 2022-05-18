@@ -37,3 +37,5 @@ if [ $RESULT -ne 0 ]; then
   echo "please verify the provided values about GKE cluster"
   exit 1
 fi
+
+echo "Validation istio params successful.."
