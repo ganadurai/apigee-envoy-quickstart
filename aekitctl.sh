@@ -87,7 +87,7 @@ fi
 
 ./scripts/validate.sh
 
-if [ $PLATFORM -eq 'opdk' ]
+if [ "$PLATFORM" == 'opdk' ]
 then
     ./scripts/validate-opdk-setup.sh
 else
