@@ -4,8 +4,10 @@ set -e
 
 echo "Installing apigee standalone envoy PoC setup"
 
-if [ $PLATFORM -ne 'opdk' ]
+if [ "$PLATFORM" -eq 'opdk' ]
 then
+    printf "\n\nInstall against opdk platform, skipping service account creation"
+else
     printf "\n\nstep 1 : service-accounts.sh\n" 
     ./scripts/service-accounts.sh
 fi
