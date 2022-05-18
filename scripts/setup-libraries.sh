@@ -21,7 +21,7 @@ else
     --environment $ENV \
     --runtime $RUNTIME \
     --username $USER \
-    --password $PASSWORD 
+    --password $PASSWORD \
     --opdk > $CLI_HOME/config.yaml
 fi
 
