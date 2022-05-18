@@ -74,6 +74,7 @@ init;
 if [ $INSTALL_TYPE == 'standalone-apigee-envoy' ]
 then
     export TOKEN=$(echo -n "$USER":"$PASSWORD" | base64 | tr -d \\r)
+    echo $TOKEN
     export TOKEN_TYPE="Basic"
 else
     export TOKEN_TYPE="Bearer"
