@@ -4,7 +4,9 @@ set -e
 
 echo "Set up Apigee Product, for the endpoint targetted in K8s environment via Envoy proxy"
 
-curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"   -H "Content-Type:application/json"   "${MGMT_HOST}/v1/organizations/${ORG}/apiproducts" -d \
+if [ $INSTALL_TYPE == 'istio-apigee-envoy' ]
+then
+    curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"   -H "Content-Type:application/json"   "${MGMT_HOST}/v1/organizations/${ORG}/apiproducts" -d \
     '{
     "name": "envoy-adapter-product-2",
     "displayName": "envoy-adapter-product-2",
@@ -43,6 +45,27 @@ curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"   -H "Content-Type:application/j
         "operationConfigType": "remoteservice"
     }
     }'
+else
+    curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"   -H "Content-Type:application/json"   "${MGMT_HOST}/v1/organizations/${ORG}/apiproducts" -d \
+    '{
+    "name" : "envoy-adapter-product-2",
+    "displayName" : "envoy-adapter-product-2",
+    "approvalType" : "auto",
+    "attributes" : [ {
+        "name" : "access",
+        "value" : "public"
+    }, {
+        "name" : "apigee-remote-service-targets",
+        "value" : "httpbin.org"
+    } ],
+    "description" : "API Product for api proxies in Envoy",
+    "environments": [
+        "'${ENV}'"
+    ],
+    "apiResources" : [ "/headers" ]
+    }'
+fi
+
 
 echo "Set up Apigee Developer"
 
