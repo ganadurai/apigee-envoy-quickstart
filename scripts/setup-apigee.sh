@@ -17,7 +17,7 @@ curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"   -H "Content-Type:application/j
     ],
     "description": "API Product for api proxies in Envoy",
     "environments": [
-        "${ENV}"
+        "'${ENV}'"
     ],
     "operationGroup": {
         "operationConfigs": [
