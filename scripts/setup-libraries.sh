@@ -22,7 +22,7 @@ else
     --runtime $RUNTIME \
     --username $USER \
     --password $PASSWORD \
-    --opdk > $CLI_HOME/config.yaml
+    --opdk --verbose > $CLI_HOME/config.yaml
 fi
 
 curl -i -v $RUNTIME/remote-token/certs | grep 200 2>&1 >/dev/null
