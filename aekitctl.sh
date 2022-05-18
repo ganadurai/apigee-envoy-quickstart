@@ -74,7 +74,6 @@ init;
 if [ $INSTALL_TYPE == 'standalone-apigee-envoy' ]
 then
     export TOKEN=$(echo -n "$USER":"$PASSWORD" | base64 | tr -d \\r)
-    echo $TOKEN
     export TOKEN_TYPE="Basic"
 else
     export TOKEN_TYPE="Bearer"
@@ -106,7 +105,6 @@ elif [ $INSTALL_TYPE == 'standalone-apigee-envoy' -a $ACTION == 'delete' ]
 then
     ./scripts/validate-standalone-setup.sh
     echo "Deleting standalone-apigee-envoy"
-    export TOKEN=$(echo "$USER":"$PASSWORD" | base64)
     ./standalone-apigee-envoy-delete.sh
 else
     usage;

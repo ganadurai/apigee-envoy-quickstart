@@ -22,7 +22,7 @@ fi
 
 
 echo "Deleting the developer app"
-echo curl -i -H "'Authorization: ${TOKEN_TYPE} ${TOKEN}'" -X DELETE "${MGMT_HOST}/v1/organizations/${ORG}/developers/test-envoy@google.com/apps/envoy-adapter-app-2"
+curl -i -H "'Authorization: ${TOKEN_TYPE} ${TOKEN}'" -X DELETE "${MGMT_HOST}/v1/organizations/${ORG}/developers/test-envoy@google.com/apps/envoy-adapter-app-2"
 
 echo "Deleting the developer"
 curl -i -H "'Authorization: ${TOKEN_TYPE} ${TOKEN}'" -X DELETE "${MGMT_HOST}/v1/organizations/${ORG}/developers/test-envoy@google.com"
