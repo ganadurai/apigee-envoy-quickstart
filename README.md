@@ -75,7 +75,7 @@ The Apigee Envoy Quickstart Toolkit sets up the Envoy proxies with Apigee adapte
     istio-apigee-envoy <br />
     standalone-apigee-envoy
 
-
+<br/><br/>
 
 ### Installation - OPDK platform
 
