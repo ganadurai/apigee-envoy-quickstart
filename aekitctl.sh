@@ -34,7 +34,7 @@ createDir() {
 
 PARAMETERS=()
 
-if [[ $# -ne 4 ]]
+if [[ $# -ne 4 && $# -ne 6 ]]
 then
    usage;
    exit 1;
@@ -54,6 +54,11 @@ do
         shift
         shift
         ;;
+        -p|--platform)
+        export PLATFORM="$2"
+        shift
+        shift
+        ;;
         *)
         PARAMETERS+=("$1")
         shift
@@ -69,31 +74,46 @@ if [[ -z $ACTION ]]; then
     usage "action is a mandatory field"
 fi
 
+init;
+
+if [ "$PLATFORM" == 'opdk' ]
+then
+    export TOKEN=$(echo -n "$USER":"$PASSWORD" | base64 | tr -d \\r)
+    export TOKEN_TYPE="Basic"
+else
+    export TOKEN_TYPE="Bearer"
+    export MGMT_HOST="https://apigee.googleapis.com"
+fi
+
+./scripts/validate.sh
+
+if [ "$PLATFORM" == 'opdk' ]
+then
+    ./scripts/validate-opdk-setup.sh
+else
+    ./scripts/validate-new-gen-setup.sh
+fi
 
 if [ $INSTALL_TYPE == 'istio-apigee-envoy' -a $ACTION == 'install' ]
 then
-    init;
     createDir;
     echo "Installing istio-apigee-envoy"
     export TEMPLATE="istio-1.12"
     ./istio-apigee-envoy-install.sh
 elif [ $INSTALL_TYPE == 'istio-apigee-envoy' -a $ACTION == 'delete' ]
 then
-    init;
     echo "Deleting istio-apigee-envoy"
-    ./istio-apigee-envoy-delete.sh
+    ./scripts/delete-apigee-envoy-setup.sh
 elif [ $INSTALL_TYPE == 'standalone-apigee-envoy' -a $ACTION == 'install' ]
 then
-    init;
     createDir;
     echo "Installing standalone-apigee-envoy"
     export TEMPLATE="envoy-1.15"
     ./standalone-apigee-envoy-install.sh
 elif [ $INSTALL_TYPE == 'standalone-apigee-envoy' -a $ACTION == 'delete' ]
 then
-    init;
     echo "Deleting standalone-apigee-envoy"
-    ./standalone-apigee-envoy-delete.sh
+    ./scripts/delete-apigee-envoy-setup.sh
 else
     usage;
     exit 1; 

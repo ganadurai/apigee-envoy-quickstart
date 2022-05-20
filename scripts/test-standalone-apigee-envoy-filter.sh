@@ -4,9 +4,9 @@ set -e
 
 echo "Extract the consumer key"
 
-export CONSUMER_KEY=$(curl -H "Authorization: Bearer ${TOKEN}"  \
+export CONSUMER_KEY=$(curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"  \
     -H "Content-Type:application/json" \
-    "https://apigee.googleapis.com/v1/organizations/${ORG}/developers/test-envoy@google.com/apps/envoy-adapter-app-2" | \
+    "${MGMT_HOST}/v1/organizations/${ORG}/developers/test-envoy@google.com/apps/envoy-adapter-app-2" | \
     jq '.credentials[0].consumerKey'); \
     export CONSUMER_KEY=$(echo $CONSUMER_KEY|cut -d '"' -f 2); \
     echo "" && echo ""

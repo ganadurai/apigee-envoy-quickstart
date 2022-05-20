@@ -4,7 +4,28 @@ set -e
 
 echo "Set up Apigee Product, for the endpoint targetted in K8s environment via Envoy proxy"
 
-curl -H "Authorization: Bearer ${TOKEN}"   -H "Content-Type:application/json"   "https://apigee.googleapis.com/v1/organizations/${ORG}/apiproducts" -d \
+if [ "$PLATFORM" == 'opdk' ]
+then
+    curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"   -H "Content-Type:application/json"   "${MGMT_HOST}/v1/organizations/${ORG}/apiproducts" -d \
+    '{
+    "name" : "envoy-adapter-product-2",
+    "displayName" : "envoy-adapter-product-2",
+    "approvalType" : "auto",
+    "attributes" : [ {
+        "name" : "access",
+        "value" : "public"
+    }, {
+        "name" : "apigee-remote-service-targets",
+        "value" : "httpbin.org"
+    } ],
+    "description" : "API Product for api proxies in Envoy",
+    "environments": [
+        "'${ENV}'"
+    ],
+    "apiResources" : [ "/headers" ]
+    }'
+else
+    curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"   -H "Content-Type:application/json"   "${MGMT_HOST}/v1/organizations/${ORG}/apiproducts" -d \
     '{
     "name": "envoy-adapter-product-2",
     "displayName": "envoy-adapter-product-2",
@@ -17,7 +38,7 @@ curl -H "Authorization: Bearer ${TOKEN}"   -H "Content-Type:application/json"   
     ],
     "description": "API Product for api proxies in Envoy",
     "environments": [
-        "eval"
+        "'${ENV}'"
     ],
     "operationGroup": {
         "operationConfigs": [
@@ -43,10 +64,12 @@ curl -H "Authorization: Bearer ${TOKEN}"   -H "Content-Type:application/json"   
         "operationConfigType": "remoteservice"
     }
     }'
+fi
+
 
 echo "Set up Apigee Developer"
 
-curl -H "Authorization: Bearer ${TOKEN}"   -H "Content-Type:application/json"   "https://apigee.googleapis.com/v1/organizations/${ORG}/developers" -d \
+curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"   -H "Content-Type:application/json"   "${MGMT_HOST}/v1/organizations/${ORG}/developers" -d \
     '{
     "email": "test-envoy@google.com",
     "firstName": "Test",
@@ -56,7 +79,7 @@ curl -H "Authorization: Bearer ${TOKEN}"   -H "Content-Type:application/json"   
 
 echo 'Set up developer app for the Product having the endpoint targetted in K8s environment via Envoy proxy'
 
-curl -H "Authorization: Bearer ${TOKEN}"   -H "Content-Type:application/json"   "https://apigee.googleapis.com/v1/organizations/${ORG}/developers/test-envoy@google.com/apps" -d \
+curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"   -H "Content-Type:application/json"   "${MGMT_HOST}/v1/organizations/${ORG}/developers/test-envoy@google.com/apps" -d \
     '{
     "name":"envoy-adapter-app-2",
     "apiProducts": [
