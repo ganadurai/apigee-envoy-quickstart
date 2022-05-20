@@ -2,6 +2,9 @@
 
 The Apigee Envoy Quickstart Toolkit sets up the Envoy proxies with Apigee adapters. 
 <br/><br/>
+## Quickstart 
+<br/>
+
 [Apigee protected ASM Envoy Proxies within Kubernetes Engine](https://cloud.google.com/apigee/docs/api-platform/envoy-adapter/v2.0.x/example-hybrid).
 
 ![poc-setup](assets/istio-apigee-envoy.png)
@@ -10,9 +13,7 @@ The Apigee Envoy Quickstart Toolkit sets up the Envoy proxies with Apigee adapte
 
 ![poc-setup](assets/standalone-apigee-envoy.png)
 
-## Quickstart 
-
-### Installation - Hybrid/X platform
+### Installation - X/Hybrid platform
 
 1. **[Create a Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects)** and connect it to an existing Billing account.
 
