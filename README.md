@@ -1,4 +1,4 @@
-# Apigee Envoy PoC Toolkit
+# Apigee Envoy Quickstart Toolkit
 
 The Apigee Envoy Quickstart Toolkit sets up the Envoy proxies with Apigee adapters. 
 <br/><br/>
