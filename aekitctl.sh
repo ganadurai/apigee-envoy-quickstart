@@ -106,8 +106,8 @@ then
     ./scripts/validate-opdk-setup.sh
 else
     ./scripts/validate-new-gen-setup.sh
-    export APIGEE_ORG = APIGEE_X_ORG
-    export APIGEE_ENV = APIGEE_X_ENV
+    export APIGEE_ORG=APIGEE_X_ORG
+    export APIGEE_ENV=APIGEE_X_ENV
 fi
 
 if [ $INSTALL_TYPE == 'istio-apigee-envoy' -a $ACTION == 'install' ]
