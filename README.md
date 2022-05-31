@@ -29,9 +29,9 @@ The Apigee Envoy Quickstart Toolkit sets up the Envoy proxies with Apigee adapte
     export CLUSTER_NAME=<gke-cluster-name>
     export CLUSTER_LOCATION=<gke-cluster-region>
     export APIGEE_PROJECT_ID=<apigee-project-id>
-    export ORG=<apigee-org>
-    export ENV=<apigee-env>
-    export RUNTIME=<env-group-virtualhost-prefixed with http/https>
+    export APIGEE_X_ORG=<apigee-org>
+    export APIGEE_X_ENV=<apigee-env>
+    export APIGEE_X_HOSTNAME=<env-group-virtualhost-prefixed with http/https>
     export APIGEE_REMOTE_SRVC_CLI_VERSION=<version for Apigee Remote Service cli for Envoy>
     export APIGEE_REMOTE_SRVC_ENVOY_VERSION=<version for Apigee Remote Service for Envoy>
     ```
@@ -87,11 +87,11 @@ The Apigee Envoy Quickstart Toolkit sets up the Envoy proxies with Apigee adapte
 1. **Set environment variables.**
     ```bash
     export MGMT_HOST=<Mgmt host of the opdk platform, including the http/https and port number>
-    export USER=<Mgmt host credential, username>
-    export PASSWORD=<Mgmt host credential, password>
-    export ORG=<apigee-org>
-    export ENV=<apigee-env>
-    export RUNTIME=<env-group-virtualhost-prefixed with http/https>
+    export APIGEE_USER=<Mgmt host credential, username>
+    export APIGEE_PASS=<Mgmt host credential, password>
+    export APIGEE_ORG=<apigee-org>
+    export APIGEE_ENV=<apigee-env>
+    export APIGEE_X_HOSTNAME=<env-group-virtualhost-prefixed with http/https>
     export APIGEE_REMOTE_SRVC_CLI_VERSION=<version for Apigee Remote Service cli for Envoy>
     export APIGEE_REMOTE_SRVC_ENVOY_VERSION=<version for Apigee Remote Service for Envoy>
     ```
