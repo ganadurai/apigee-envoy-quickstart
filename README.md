@@ -21,6 +21,8 @@ The Apigee Envoy Quickstart Toolkit sets up the Envoy proxies with Apigee adapte
 
 1. **This toolkit is validated in a Linux environment. Needed libraries : wget, jq.**
 
+1. **If your GKE cluster is version 1.25+ follow this **[link](https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke)** for enabling required changes for kubectl authentication**
+
 1. **The GCP Apigee project should be enabled for service-account key generation.**
 
 1. **Set your GCP Project ID, Apigee platform environment variables.** 
