@@ -31,16 +31,18 @@ then
     --password $APIGEE_PASS \
     --opdk --verbose > $CLI_HOME/config.yaml
 else
+#    $CLI_HOME/apigee-remote-service-cli provision \
+#    --organization $APIGEE_ORG \
+#    --environment $APIGEE_ENV \
+#    --runtime $APIGEE_X_HOSTNAME \
+#    --namespace $NAMESPACE \
+#    --analytics-sa $AX_SERVICE_ACCOUNT \
+#    --token $TOKEN > $CLI_HOME/config.yaml
+
+    envsubst < ../templates/config.tmpl > ${ENVOY_HOME}/config-init.yaml
+
     $CLI_HOME/apigee-remote-service-cli provision \
-    --organization $APIGEE_ORG \
-    --environment $APIGEE_ENV \
-    --runtime $APIGEE_X_HOSTNAME \
-    --namespace $NAMESPACE \
-    --analytics-sa $AX_SERVICE_ACCOUNT \
-    --token $TOKEN > $CLI_HOME/config.yaml
-
-    envsubst < ../templates/config.tmpl > ${APIGEE_HOME}/overlays/controller/kustomization.yaml
-
+    --config=${ENVOY_HOME}/config-init.yaml > $CLI_HOME/config.yaml
 fi
 
 curl -i -v $APIGEE_X_HOSTNAME/remote-token/certs | grep 200 2>&1 >/dev/null
