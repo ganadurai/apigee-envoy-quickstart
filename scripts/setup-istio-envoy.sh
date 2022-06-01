@@ -21,7 +21,7 @@ testHttpbin() {
       -- curl -i httpbin.apigee.svc.cluster.local/headers | grep 200 \
   2>&1 >/dev/null
   RESULT=$?
-  return RESULT
+  return $RESULT
 }
 
 echo "Fixing the generated yaml files to use the namespace user provided"
