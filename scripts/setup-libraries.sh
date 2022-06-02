@@ -39,6 +39,7 @@ else
 #    --analytics-sa $AX_SERVICE_ACCOUNT \
 #    --token $TOKEN > $CLI_HOME/config.yaml
 
+    echo $(pwd)
     envsubst < ../templates/config.tmpl > ${ENVOY_HOME}/config-init.yaml
 
     $CLI_HOME/apigee-remote-service-cli provision \
