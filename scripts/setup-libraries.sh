@@ -16,6 +16,8 @@
 
 set -e
 
+INSTALL_SCRIPTS_DIR=$(pwd)
+
 cd $CLI_HOME
 
 printf "\n\n\nProvisioning the apigee remote service\n"
@@ -39,8 +41,8 @@ else
 #    --analytics-sa $AX_SERVICE_ACCOUNT \
 #    --token $TOKEN > $CLI_HOME/config.yaml
 
-    ls $(pwd)
-    envsubst < templates/config.tmpl > ${ENVOY_HOME}/config-init.yaml
+    echo $INSTALL_SCRIPTS_DIR
+    envsubst < $INSTALL_SCRIPTS_DIR/../templates/config.tmpl > ${ENVOY_HOME}/config-init.yaml
 
     $CLI_HOME/apigee-remote-service-cli provision \
     --config=${ENVOY_HOME}/config-init.yaml > $CLI_HOME/config.yaml
