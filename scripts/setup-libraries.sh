@@ -42,7 +42,7 @@ else
 #    --token $TOKEN > $CLI_HOME/config.yaml
 
     echo $INSTALL_SCRIPTS_DIR
-    envsubst < $INSTALL_SCRIPTS_DIR/../templates/config.tmpl > ${ENVOY_HOME}/config-init.yaml
+    envsubst < $INSTALL_SCRIPTS_DIR/templates/config.tmpl > ${ENVOY_HOME}/config-init.yaml
 
     $CLI_HOME/apigee-remote-service-cli provision \
     --config=${ENVOY_HOME}/config-init.yaml > $CLI_HOME/config.yaml
