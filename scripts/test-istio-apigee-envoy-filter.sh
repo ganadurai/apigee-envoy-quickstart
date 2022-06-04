@@ -44,3 +44,17 @@ echo ""
 echo "Try with and without sending the x-api-key header, this proves the httpbin service is intercepted by the Envoy sidecar which has the Envoy filter configured to connect to Apigee adapter running as container that executes the key verification with the Apigee runtime"
 
 echo ""
+
+$testCommand | grep 200 \
+  2>&1 >/dev/null
+RESULT=$?
+
+counter=0;
+while [ $RESULT -ne 0 ] && [ $counter -lt 5 ]; do
+  printf "\n\nTesting the httpbin application $counter\n"
+  $testCommand | grep 200 \
+  2>&1 >/dev/null
+  RESULT=$?
+  sleep 20
+  counter=$((counter+1))
+done
