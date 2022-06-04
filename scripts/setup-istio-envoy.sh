@@ -44,11 +44,11 @@ testHttpbin;
 RESULT=$?
 
 counter=0;
-while [ $RESULT -ne 0 && $counter<5 ]; do
+while [ $RESULT -ne 0 ] && [ $counter -lt 5 ]; do
   testHttpbin;
   RESULT=$?
   sleep 5
-  counter=counter+1
+  counter=$((counter+1))
 done
 
 if [ $RESULT -ne 0 ]; then
