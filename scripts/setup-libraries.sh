@@ -41,7 +41,7 @@ else
     --analytics-sa $AX_SERVICE_ACCOUNT \
     --token $TOKEN > $CLI_HOME/config.yaml
 
-sed -i "s/      collection_interval: 10s/      collection_interval: 10s\r    products:\r      refresh_rate: 2s\r/g" $CLI_HOME/config.yaml
+sed -i "s/      collection_interval: 10s/      collection_interval: 10s\r\n    products:\r\n      refresh_rate: 2s/g" $CLI_HOME/config.yaml
 
 fi
 
