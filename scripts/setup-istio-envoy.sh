@@ -43,7 +43,7 @@ kubectl --context=${CLUSTER_CTX} -n $NAMESPACE apply -f apigee-envoy-adapter.yam
 testHttpbin;
 RESULT=$?
 
-counter = 0;
+counter=0;
 while [ $RESULT -ne 0 && $counter<5 ]; do
   testHttpbin;
   RESULT=$?
