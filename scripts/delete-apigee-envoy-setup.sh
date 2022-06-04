@@ -28,7 +28,7 @@ then
     gcloud iam service-accounts delete $ENVOY_AX_SA@$APIGEE_PROJECT_ID.iam.gserviceaccount.com \
     --project=$APIGEE_PROJECT_ID --quiet
 
-    rm $AX_SERVICE_ACCOUNT
+    rm $ENVOY_HOME/$AX_SERVICE_ACCOUNT
 fi
 
 if [ $INSTALL_TYPE == 'standalone-apigee-envoy' ]

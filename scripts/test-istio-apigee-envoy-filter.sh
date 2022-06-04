@@ -38,3 +38,23 @@ echo ""
 echo "Try with and without sending the x-api-key header, this proves the httpbin service is intercepted by the Envoy sidecar which has the Envoy filter configured to connect to Apigee adapter running as container that executes the key verification with the Apigee runtime"
 
 echo ""
+
+kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl \
+--restart=Never curl --overrides='{"apiVersion": "v1", "metadata": {"annotations":{"sidecar.istio.io/inject": "false"}}}' \
+-- curl -i httpbin.apigee.svc.cluster.local/headers -H "x-api-key: $CONSUMER_KEY" \
+| grep 200 \
+  2>&1 >/dev/null
+RESULT=$?
+echo "Curl test command result - $RESULT"
+counter=0;
+while [ $RESULT -ne 0 ] && [ $counter -lt 5 ]; do
+  printf "\n\nTesting the httpbin application $counter\n"
+  kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl \
+  --restart=Never curl --overrides='{"apiVersion": "v1", "metadata": {"annotations":{"sidecar.istio.io/inject": "false"}}}' \
+  -- curl -i httpbin.apigee.svc.cluster.local/headers -H "x-api-key: $CONSUMER_KEY" \
+  | grep 200 \
+  2>&1 >/dev/null
+  RESULT=$?
+  sleep 20
+  counter=$((counter+1))
+done
