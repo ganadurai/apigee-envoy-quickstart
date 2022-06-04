@@ -29,15 +29,9 @@ echo "Wait for few minutes for the Envoy and Apigee adapter to have the setup co
 
 echo ""
 
-testCommand=$(echo kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl --restart=Never curl \
+echo kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl --restart=Never curl \
     --overrides=\'{\"apiVersion\":\"v1\", \"metadata\":{\"annotations\": { \"sidecar.istio.io/inject\":\"false\" } } }\' \
-    -- curl -i httpbin.apigee.svc.cluster.local/headers -H "\"x-api-key: $CONSUMER_KEY\"")
-
-echo $testCommand
-
-#echo kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl --restart=Never curl \
-#    --overrides=\'{\"apiVersion\":\"v1\", \"metadata\":{\"annotations\": { \"sidecar.istio.io/inject\":\"false\" } } }\' \
-#    -- curl -i httpbin.apigee.svc.cluster.local/headers -H "\"x-api-key: $CONSUMER_KEY\""
+    -- curl -i httpbin.apigee.svc.cluster.local/headers -H "\"x-api-key: $CONSUMER_KEY\""
 
 echo ""
 
@@ -45,14 +39,20 @@ echo "Try with and without sending the x-api-key header, this proves the httpbin
 
 echo ""
 
-$testCommand | grep 200 \
+kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl \
+--restart=Never curl --overrides='{"apiVersion": "v1", "metadata": {"annotations":{"sidecar.istio.io/inject": "false"}}}' \
+-- curl -i httpbin.apigee.svc.cluster.local/headers -H "x-api-key: $CONSUMER_KEY" \
+| grep 200 \
   2>&1 >/dev/null
 RESULT=$?
 
 counter=0;
 while [ $RESULT -ne 0 ] && [ $counter -lt 5 ]; do
   printf "\n\nTesting the httpbin application $counter\n"
-  $testCommand | grep 200 \
+  kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl \
+  --restart=Never curl --overrides='{"apiVersion": "v1", "metadata": {"annotations":{"sidecar.istio.io/inject": "false"}}}' \
+  -- curl -i httpbin.apigee.svc.cluster.local/headers -H "x-api-key: $CONSUMER_KEY" \
+  | grep 200 \
   2>&1 >/dev/null
   RESULT=$?
   sleep 20
