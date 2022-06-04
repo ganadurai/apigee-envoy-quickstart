@@ -29,9 +29,15 @@ echo "Wait for few minutes for the Envoy and Apigee adapter to have the setup co
 
 echo ""
 
-echo kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl --restart=Never curl \
+testCommand=$(echo kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl --restart=Never curl \
     --overrides=\'{\"apiVersion\":\"v1\", \"metadata\":{\"annotations\": { \"sidecar.istio.io/inject\":\"false\" } } }\' \
-    -- curl -i httpbin.apigee.svc.cluster.local/headers -H "\"x-api-key: $CONSUMER_KEY\""
+    -- curl -i httpbin.apigee.svc.cluster.local/headers -H "\"x-api-key: $CONSUMER_KEY\"")
+
+echo $testCommand
+
+#echo kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl --restart=Never curl \
+#    --overrides=\'{\"apiVersion\":\"v1\", \"metadata\":{\"annotations\": { \"sidecar.istio.io/inject\":\"false\" } } }\' \
+#    -- curl -i httpbin.apigee.svc.cluster.local/headers -H "\"x-api-key: $CONSUMER_KEY\""
 
 echo ""
 
