@@ -45,7 +45,7 @@ kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/c
 | grep 200 \
   2>&1 >/dev/null
 RESULT=$?
-echo $RESULT
+echo "Curl test command result - $RESULT"
 counter=0;
 while [ $RESULT -ne 0 ] && [ $counter -lt 5 ]; do
   printf "\n\nTesting the httpbin application $counter\n"
