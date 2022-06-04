@@ -40,10 +40,9 @@ else
     --namespace $NAMESPACE \
     --analytics-sa $AX_SERVICE_ACCOUNT \
     --token $TOKEN > $CLI_HOME/config.yaml
+fi
 
 sed -i "s/      collection_interval: 10s/      collection_interval: 10s\n    products:\n      refresh_rate: 1m/g" $CLI_HOME/config.yaml
-
-fi
 
 curl -i -v $APIGEE_X_HOSTNAME/remote-token/certs | grep 200 2>&1 >/dev/null
 RESULT=$?
