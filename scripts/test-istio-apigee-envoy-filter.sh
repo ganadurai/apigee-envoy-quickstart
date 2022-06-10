@@ -16,45 +16,55 @@
 
 set -e
 
-echo "Extract the consumer key"
+testHttpbin() {
+  printf "\n\nTesting the httpbin application\n"
+  kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl \
+  --restart=Never curl --overrides='{"apiVersion": "v1", "metadata": {"annotations":{"sidecar.istio.io/inject": "false"}}}' \
+  -- curl -i httpbin.apigee.svc.cluster.local/headers -H "x-api-key: $CONSUMER_KEY" | grep 200 \
+  2>&1 >/dev/null
+  RESULT=$?
+  return $RESULT
+}
+
+printf "\nExtract the consumer key"
 
 export CONSUMER_KEY=$(curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"  \
     -H "Content-Type:application/json" \
     "${MGMT_HOST}/v1/organizations/${APIGEE_ORG}/developers/test-envoy@google.com/apps/envoy-adapter-app-2" | \
     jq '.credentials[0].consumerKey'); \
     export CONSUMER_KEY=$(echo $CONSUMER_KEY|cut -d '"' -f 2); \
-    echo "" && echo ""
+    printf "\n" && printf "\n"
 
-echo "Wait for few minutes for the Envoy and Apigee adapter to have the setup completed. Then try the below command"
+printf "\nWait for few minutes for the Envoy and Apigee adapter to have the setup completed. Then try the below command"
 
-echo ""
+printf "\n"
 
 echo kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl --restart=Never curl \
     --overrides=\'{\"apiVersion\":\"v1\", \"metadata\":{\"annotations\": { \"sidecar.istio.io/inject\":\"false\" } } }\' \
     -- curl -i httpbin.apigee.svc.cluster.local/headers -H "\"x-api-key: $CONSUMER_KEY\""
 
-echo ""
+printf "\n"
 
-echo "Try with and without sending the x-api-key header, this proves the httpbin service is intercepted by the Envoy sidecar which has the Envoy filter configured to connect to Apigee adapter running as container that executes the key verification with the Apigee runtime"
+printf "\nTry with and without sending the x-api-key header: this proves the httpbin service is intercepted by the Envoy sidecar which has the Envoy filter configured to connect to Apigee adapter running as container that executes the key verification with the Apigee runtime"
 
-echo ""
+printf "\n"
 
-kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl \
---restart=Never curl --overrides='{"apiVersion": "v1", "metadata": {"annotations":{"sidecar.istio.io/inject": "false"}}}' \
--- curl -i httpbin.apigee.svc.cluster.local/headers -H "x-api-key: $CONSUMER_KEY" \
-| grep 200 \
-  2>&1 >/dev/null
+testHttpbin;
 RESULT=$?
-echo "Curl test command result - $RESULT"
+printf "\nCurl test command result - $RESULT\n"
+
 counter=0;
-while [ $RESULT -ne 0 ] && [ $counter -lt 5 ]; do
+while [ $RESULT -ne 0 ] && [ $counter -lt 3 ]; do
   printf "\n\nTesting the httpbin application $counter\n"
-  kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl \
-  --restart=Never curl --overrides='{"apiVersion": "v1", "metadata": {"annotations":{"sidecar.istio.io/inject": "false"}}}' \
-  -- curl -i httpbin.apigee.svc.cluster.local/headers -H "x-api-key: $CONSUMER_KEY" \
-  | grep 200 \
-  2>&1 >/dev/null
+  testHttpbin;
   RESULT=$?
   sleep 20
   counter=$((counter+1))
 done
+
+if [ $RESULT -eq 0 ]; then
+  printf "\nValidation of the apigee envoy quickstart engine successful" 
+else
+  printf "\nValidation of the apigee envoy quickstart engine NOT successful" 
+fi
+

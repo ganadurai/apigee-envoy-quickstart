@@ -16,6 +16,9 @@
 
 if [ $INSTALL_TYPE == 'istio-apigee-envoy' ]
 then
+    gcloud --project=${PROJECT_ID} container clusters get-credentials \
+    ${CLUSTER_NAME} --zone ${CLUSTER_LOCATION}
+
     echo "Deleting the namespace - "$NAMESPACE
     kubectl --context=${CLUSTER_CTX} delete namespace $NAMESPACE
 
