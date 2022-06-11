@@ -37,6 +37,11 @@ init() {
     export ENVOY_CONFIGS_HOME=$CLI_HOME/envoy-configs-and-samples
     export AX_SERVICE_ACCOUNT=$ENVOY_HOME/$ENVOY_AX_SA.json
     export NAMESPACE="apigee"
+    if [ "$PLATFORM" == 'edge' ]; then
+        export MGMT_HOST="https://api.enterprise.apigee.com"
+    fi
+    exit 1
+fi
 }
 
 createDir() {
