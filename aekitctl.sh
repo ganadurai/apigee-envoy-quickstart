@@ -40,8 +40,6 @@ init() {
     if [ "$PLATFORM" == 'edge' ]; then
         export MGMT_HOST="https://api.enterprise.apigee.com"
     fi
-    exit 1
-fi
 }
 
 createDir() {
