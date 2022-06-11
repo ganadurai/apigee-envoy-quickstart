@@ -80,11 +80,11 @@ The Apigee Envoy Quickstart Toolkit sets up the Envoy proxies with Apigee adapte
 
 <br/><br/>
 
-### Installation - OPDK platform
+### Installation - OPDK / Edge platform
 
 [Apigee protected Envoy Proxies in docker containers for OPDK platform](https://docs.apigee.com/api-platform/envoy-adapter/v2.0.x/example-edge).
 
-![poc-setup](assets/standalone-apigee-envoy-opdk.png)
+![poc-setup](assets/standalone-apigee-envoy-opdk-edge.png)
 
 1. **Set environment variables.**
     ```bash
@@ -106,20 +106,31 @@ The Apigee Envoy Quickstart Toolkit sets up the Envoy proxies with Apigee adapte
     unzip apigee-envoy-quickstart-main.zip
     ```
 
-1. **Run to install the quickstart toolkit.**
+1. **Run to install the quickstart toolkit for opdk.**
     ```bash 
     cd ${ENVOY_HOME}/apigee-envoy-quickstart-main
     ./aekitctl.sh --type standalone-apigee-envoy --action install --platform opdk
+    ```
+
+1. **Run to install the quickstart toolkit for edge.**
+    ```bash 
+    cd ${ENVOY_HOME}/apigee-envoy-quickstart-main
+    ./aekitctl.sh --type standalone-apigee-envoy --action install --platform edge
     ```
 
 1. **On successful run, it displays the commands (kubeclt run, curl) to validate the traffic intiated to the Envoy endpoints being protected by Apigee Adapter service.**
 
 ### Cleanup
 
-1. **Run to cleanup the PoC setup from the GKE and Apigee platform**
+1. **Run to cleanup the PoC setup from OPDK Apigee platform**
     ```bash
     cd ${ENVOY_HOME}/apigee-envoy-quickstart-main
     ./aekitctl.sh --type standalone-apigee-envoy --action delete --platform opdk
     ```
+
+1. **Run to cleanup the PoC setup from Edge Apigee platform**
+    ```bash
+    cd ${ENVOY_HOME}/apigee-envoy-quickstart-main
+    ./aekitctl.sh --type standalone-apigee-envoy --action delete --platform edge
     
 
