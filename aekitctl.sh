@@ -96,7 +96,7 @@ fi
 
 init;
 
-if [ "$PLATFORM" == 'opdk' ]
+if [ "$PLATFORM" == 'opdk' ] || [ "$PLATFORM" == 'edge' ]
 then
     export TOKEN=$(echo -n "$APIGEE_USER":"$APIGEE_PASS" | base64 | tr -d \\r)
     export TOKEN_TYPE="Basic"
@@ -107,9 +107,9 @@ fi
 
 ./scripts/validate.sh
 
-if [ "$PLATFORM" == 'opdk' ]
+if [ "$PLATFORM" == 'opdk' ] || [ "$PLATFORM" == 'edge' ]
 then
-    ./scripts/validate-opdk-setup.sh
+    ./scripts/validate-opdk-edge-setup.sh
 else
     ./scripts/validate-new-gen-setup.sh
     export APIGEE_ORG=$APIGEE_X_ORG

@@ -18,7 +18,7 @@ set -e
 
 echo "Set up Apigee Product, for the endpoint targetted in K8s environment via Envoy proxy"
 
-if [ "$PLATFORM" == 'opdk' ]
+if [ "$PLATFORM" == 'opdk' ] || [ "$PLATFORM" == 'edge' ]
 then
     curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"   -H "Content-Type:application/json"   "${MGMT_HOST}/v1/organizations/${APIGEE_ORG}/apiproducts" -d \
     '{

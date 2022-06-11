@@ -26,9 +26,7 @@ if [[ -z $APIGEE_ENV ]]; then
     exit 1
 fi
 
-
-
-if [[ -z $MGMT_HOST ]]; then
+if [ "$PLATFORM" == 'opdk' ] && [[ -z $MGMT_HOST ]]; then
     echo "Environment variable OPDK MGMT_HOST is not set, please checkout README.md"
     exit 1
 fi

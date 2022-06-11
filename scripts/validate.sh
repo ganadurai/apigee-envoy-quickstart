@@ -16,7 +16,7 @@
 
 set -e
 
-if [[ -z $APIGEE_X_HOSTNAME ]]; then
+if [ "$PLATFORM" != 'opdk' ] && [[ -z $APIGEE_X_HOSTNAME ]]; then
     echo "Environment variable APIGEE_X_HOSTNAME is not set, please checkout README.md"
     exit 1
 fi

@@ -34,6 +34,16 @@ then
     --opdk --verbose > $CLI_HOME/config.yaml
 
     sed -i "s/      legacy_endpoint: true/      legacy_endpoint: true\n    products:\n      refresh_rate: 1m/g" $CLI_HOME/config.yaml
+elif [ "$PLATFORM" == 'edge' ]
+then
+    $CLI_HOME/apigee-remote-service-cli provision \
+    --organization $APIGEE_ORG \
+    --environment $APIGEE_ENV \
+    --username $APIGEE_USER \
+    --password $APIGEE_PASS \
+    --legacy --verbose > $CLI_HOME/config.yaml
+
+    sed -i "s/      legacy_endpoint: true/      legacy_endpoint: true\n    products:\n      refresh_rate: 1m/g" $CLI_HOME/config.yaml
 else
     $CLI_HOME/apigee-remote-service-cli provision \
     --organization $APIGEE_ORG \
