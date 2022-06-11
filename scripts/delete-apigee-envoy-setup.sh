@@ -54,5 +54,6 @@ curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}" -X DELETE "${MGMT_HOST}/v1/organ
 echo "Deleting the directory"
 rm -Rf $CLI_HOME
 rm -Rf $REMOTE_SERVICE_HOME
-rm $ENVOY_HOME/*.tar.gz
+rm $ENVOY_HOME/*-sa.json
+rm $ENVOY_HOME/*.tar.*
 
