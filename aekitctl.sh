@@ -25,7 +25,8 @@ usage() {
         "example: $(basename "$0") -t standalone-apigee-envoy -a delete\n" \
         "Parameters:\n" \
         "-t --type        : Apigee protected Envoy installation type, valida values 'istio-apigee-envoy'. 'standalone-apigee-envoy'\n" \
-        "-a --action      : Install or Delete action, valid values 'install', 'delete'\n"
+        "-a --action      : Install or Delete action, valid values 'install', 'delete'\n" \
+        "-p --platform    : Standalone install for platform opdk or edge, valid values 'opdk', 'edge'\n"
     exit 1
 }
 
