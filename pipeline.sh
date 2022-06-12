@@ -16,10 +16,8 @@
 
 export APIGEE_ORG=amer-poc10
 export APIGEE_ENV=test
-export APIGEE_USER="ganasdurai@gmail.com"
-export APIGEE_PASS="Apigee1234!"
 
-export ENVOY_HOME=/tmp
+export ENVOY_HOME=/tmp/apigee-envoy-quickstart
 export APIGEE_REMOTE_SRVC_CLI_VERSION=2.0.5
 export APIGEE_REMOTE_SRVC_ENVOY_VERSION=2.0.5
 

@@ -92,10 +92,13 @@ if [[ -z $ACTION ]]; then
     usage "action is a mandatory field"
 fi
 
-gke-gcloud-auth-plugin --version 2>&1 >/dev/null
-RESULT=$?
-if [ $RESULT -eq 0 ]; then
-  export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+if [ "$PLATFORM" != 'opdk' ] && [ "$PLATFORM" != 'edge' ]
+then
+    gke-gcloud-auth-plugin --version 2>&1 >/dev/null
+    RESULT=$?
+    if [ $RESULT -eq 0 ]; then
+        export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+    fi
 fi
 
 init;

@@ -16,7 +16,16 @@
 
 set -e
 
-echo "Extract the consumer key"
+testHttpbin() {
+    printf "\nTesting deployed envoy proxy with apigee adapter\n"
+    curl -i http://localhost:8080/headers -H 'Host: httpbin.org'  \
+        -H 'x-api-key: $CONSUMER_KEY' | grep 200 \
+    2>&1 >/dev/null
+    RESULT=$?
+    return $RESULT
+}
+
+printf "\nExtract the consumer key\n"
 
 export CONSUMER_KEY=$(curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"  \
     -H "Content-Type:application/json" \
@@ -25,15 +34,37 @@ export CONSUMER_KEY=$(curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"  \
     export CONSUMER_KEY=$(echo $CONSUMER_KEY|cut -d '"' -f 2); \
     echo "" && echo ""
 
-echo "Wait for few minutes for the Envoy and Apigee adapter to have the setup completed. Then try the below command"
+printf "\nWait for few minutes for the Envoy and Apigee adapter to have the setup completed. Then try the below command"
 
-echo ""
+printf "\n"
 
 echo curl -i http://localhost:8080/headers -H "\"Host: httpbin.org\""  \
 -H "\"x-api-key: $CONSUMER_KEY\""
 
-echo ""
+printf "\n"
 
-echo "Try with and without sending the x-api-key header, this proves the httpbin service is intercepted by the Envoy sidecar which has the Envoy filter configured to connect to Apigee adapter running as container that executes the key verification with the Apigee runtime"
+printf "\nTry with and without sending the x-api-key header, this proves the httpbin service is intercepted by the Envoy sidecar which has the Envoy filter configured to connect to Apigee adapter running as container that executes the key verification with the Apigee runtime\n"
 
-echo ""
+sleep 2000
+
+#printf "\n"
+
+testHttpbin;
+RESULT=$?
+printf "\nCurl test command result - $RESULT\n"
+
+counter=0;
+while [ $RESULT -ne 0 ] && [ $counter -lt 3 ]; do
+  printf "\n\nTesting the httpbin application $counter\n"
+  testHttpbin;
+  RESULT=$?
+  sleep 20
+  counter=$((counter+1))
+done
+
+if [ $RESULT -eq 0 ]; then
+  printf "\nValidation of the apigee envoy quickstart engine successful" 
+else
+  printf "\nValidation of the apigee envoy quickstart engine NOT successful" 
+fi
+
