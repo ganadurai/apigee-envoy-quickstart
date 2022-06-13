@@ -18,11 +18,18 @@ set -e
 
 testHttpbin() {
     printf "\nTesting deployed envoy proxy with apigee adapter\n"
-    curl -i http://localhost:8080/headers -H 'Host: httpbin.org'  \
-        -H "'x-api-key: $CONSUMER_KEY'" | grep 200 \
-    2>&1 >/dev/null
-    RESULT=$?
-    printf $RESULT
+    RESULT=1
+    OUTPUT=$(curl -i http://localhost:8080/headers -H 'Host: httpbin.org' \
+        -H "'x-api-key: $CONSUMER_KEY'" | grep 200)
+    if echo "$OUTPUT" | grep -q "200"; then
+        RESULT=0
+    fi
+#    curl -i http://localhost:8080/headers -H 'Host: httpbin.org'  \
+#        -H "'x-api-key: $CONSUMER_KEY'" | grep 200 \
+#    2>&1 >/dev/null
+#    RESULT=$?
+#    printf $RESULT
+
     return $RESULT
 }
 
@@ -50,15 +57,16 @@ printf "\nWaiting for envoy proxy to be ready.."
 sleep 20
 printf "\nTesting envoy endpoint.."
 
-testHttpbin; 2>&1 >/dev/null
-RESULT=$?
+#testHttpbin; 2>&1 >/dev/null
+#RESULT=$?
+
+RESULT=$(testHttpbin;)
 printf "\nCurl test command result - $RESULT\n"
 
 counter=0;
 while [ $RESULT -ne 0 ] && [ $counter -lt 3 ]; do
   printf "\n\nTesting the httpbin application $counter\n"
-  testHttpbin;
-  RESULT=$?
+  RESULT=$(testHttpbin;)
   sleep 20
   counter=$((counter+1))
 done
