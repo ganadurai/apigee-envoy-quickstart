@@ -22,6 +22,7 @@ testHttpbin() {
         -H 'x-api-key: $CONSUMER_KEY' | grep 200 \
     2>&1 >/dev/null
     RESULT=$?
+    printf $RESULT
     return $RESULT
 }
 
@@ -45,11 +46,11 @@ printf "\n"
 
 printf "\nTry with and without sending the x-api-key header, this proves the httpbin service is intercepted by the Envoy sidecar which has the Envoy filter configured to connect to Apigee adapter running as container that executes the key verification with the Apigee runtime\n"
 
+printf "\nWaiting for envoy proxy to be ready.."
 sleep 20
-
 printf "\nTesting envoy endpoint.."
 
-testHttpbin;
+testHttpbin; 2>&1 >/dev/null
 RESULT=$?
 printf "\nCurl test command result - $RESULT\n"
 
