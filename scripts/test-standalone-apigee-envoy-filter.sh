@@ -45,7 +45,7 @@ printf "\n"
 
 printf "\nTry with and without sending the x-api-key header, this proves the httpbin service is intercepted by the Envoy sidecar which has the Envoy filter configured to connect to Apigee adapter running as container that executes the key verification with the Apigee runtime\n"
 
-sleep 2000
+#sleep 2000
 
 #printf "\n"
 
