@@ -19,7 +19,7 @@ set -e
 testHttpbin() {
     printf "\nTesting deployed envoy proxy with apigee adapter\n"
     curl -i http://localhost:8080/headers -H 'Host: httpbin.org'  \
-        -H 'x-api-key: $CONSUMER_KEY' | grep 200 \
+        -H "x-api-key: $CONSUMER_KEY" | grep 200 \
     2>&1 >/dev/null
     RESULT=$?
     printf $RESULT
