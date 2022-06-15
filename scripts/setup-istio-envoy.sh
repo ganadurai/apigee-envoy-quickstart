@@ -44,7 +44,8 @@ testHttpbin;
 RESULT=$?
 
 counter=0;
-while [ $RESULT -ne 0 ] && [ $counter -lt 5 ]; do
+while [ $RESULT -ne 0 ] && [ $counter -lt 10 ]; do
+  printf "\nTrying the httpbin to be ready $counter out of 10\n"
   testHttpbin;
   RESULT=$?
   sleep 5

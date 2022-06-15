@@ -21,6 +21,12 @@ chmod 644 $CLI_HOME/config.yaml
 nohup docker run -v $CLI_HOME/config.yaml:/config.yaml \
 -p 5000:5000 google/apigee-envoy-adapter:v2.0.5 &
 
+sleep 10
+
+docker ps -a
+
+sleep 5
+
 mkdir $ENVOY_CONFIGS_HOME/logs
 
 chmod 777 $ENVOY_CONFIGS_HOME/logs
@@ -36,5 +42,10 @@ nohup docker run --net=host -v $ENVOY_CONFIGS_HOME/logs:/tmp/logs \
 --rm envoyproxy/envoy:v1.21-latest --log-path /tmp/logs/custom.log \
 -c /etc/envoy/envoy.yaml --log-level debug &
 
+sleep 10
+
+docker ps -a
+
+sleep 5
 
 
