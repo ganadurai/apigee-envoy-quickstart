@@ -19,6 +19,7 @@ testHttpbin() {
     RESULT=1
     OUTPUT=$(curl -i http://localhost:8080/headers -H 'Host: httpbin.org' \
         -H "x-api-key: $CONSUMER_KEY" | grep 200)
+    printf "\n$OUTPUT"
     if [[ "$OUTPUT" == *"200"* ]]; then
         RESULT=0
     fi
