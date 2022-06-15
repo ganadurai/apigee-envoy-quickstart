@@ -22,6 +22,7 @@ testHttpbin() {
   OUTPUT=$(kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl \
   --restart=Never curl --overrides='{"apiVersion": "v1", "metadata": {"annotations":{"sidecar.istio.io/inject": "false"}}}' \
   -- curl -i httpbin.apigee.svc.cluster.local/headers -H "x-api-key: $CONSUMER_KEY" | grep 200)
+  printf $OUTPUT
   if [[ "$OUTPUT" == *"200"* ]]; then
       RESULT=0
   fi
