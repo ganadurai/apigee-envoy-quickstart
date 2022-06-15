@@ -55,7 +55,7 @@ RESULT=$?
 printf "\nCurl test command result - $RESULT\n"
 
 counter=0;
-while [ $RESULT -ne 0 ] && [ $counter -lt 3 ]; do
+while [ $RESULT -ne 0 ] && [ $counter -lt 5 ]; do
   sleep 20
   printf "\n\nTesting the httpbin application $counter\n"
   testHttpbin;
