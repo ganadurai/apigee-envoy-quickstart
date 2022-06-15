@@ -52,12 +52,10 @@ printf "\nTesting envoy endpoint.."
 testHttpbin;
 RESULT=$?
 
-printf "\nCurl test command result - $RESULT\n"
-
 counter=0;
 while [ $RESULT -ne 0 ] && [ $counter -lt 5 ]; do
+  printf "\n\nTesting the httpbin application $counter of 5\n"
   sleep 20
-  printf "\n\nTesting the httpbin application $counter\n"
   testHttpbin;
   RESULT=$?
   counter=$((counter+1))
