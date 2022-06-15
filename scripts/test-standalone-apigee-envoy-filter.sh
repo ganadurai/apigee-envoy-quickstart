@@ -14,22 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -e
-
 testHttpbin() {
     printf "\nTesting deployed envoy proxy with apigee adapter\n"
     RESULT=1
     OUTPUT=$(curl -i http://localhost:8080/headers -H 'Host: httpbin.org' \
-        -H "'x-api-key: $CONSUMER_KEY'" | grep 200)
-    if echo "$OUTPUT" | grep -q "200"; then
+        -H "x-api-key: $CONSUMER_KEY" | grep 200)
+    if [[ "$OUTPUT" == *"200"* ]]; then
         RESULT=0
     fi
-#    curl -i http://localhost:8080/headers -H 'Host: httpbin.org'  \
-#        -H "'x-api-key: $CONSUMER_KEY'" | grep 200 \
-#    2>&1 >/dev/null
-#    RESULT=$?
-#    printf $RESULT
-
     return $RESULT
 }
 
@@ -57,10 +49,9 @@ printf "\nWaiting for envoy proxy to be ready.."
 sleep 20
 printf "\nTesting envoy endpoint.."
 
-#testHttpbin; 2>&1 >/dev/null
-#RESULT=$?
+testHttpbin;
+RESULT=$?
 
-RESULT=$(testHttpbin;)
 printf "\nCurl test command result - $RESULT\n"
 
 counter=0;
@@ -72,8 +63,8 @@ while [ $RESULT -ne 0 ] && [ $counter -lt 3 ]; do
 done
 
 if [ $RESULT -eq 0 ]; then
-  printf "\nValidation of the apigee envoy quickstart engine successful" 
+  printf "\nValidation of the apigee envoy quickstart engine successful\n" 
 else
-  printf "\nValidation of the apigee envoy quickstart engine NOT successful" 
+  printf "\nValidation of the apigee envoy quickstart engine NOT successful\n" 
 fi
 
