@@ -17,7 +17,6 @@
 set -e
 
 testHttpbin() {
-  printf "\n\nTesting the httpbin application\n"
   RESULT=1
   OUTPUT=$(kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl \
   --restart=Never curl --overrides='{"apiVersion": "v1", "metadata": {"annotations":{"sidecar.istio.io/inject": "false"}}}' \
