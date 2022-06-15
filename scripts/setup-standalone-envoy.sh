@@ -40,6 +40,8 @@ nohup docker run --net=host -v $ENVOY_CONFIGS_HOME/logs:/tmp/logs \
 --rm envoyproxy/envoy:v1.21-latest --log-path /tmp/logs/custom.log \
 -c /etc/envoy/envoy.yaml --log-level debug &
 
+sleep 5
+
 docker ps -a
 
 sleep 2
