@@ -86,7 +86,7 @@ The Apigee Envoy Quickstart Toolkit sets up the Envoy proxies with Apigee adapte
 
 ![poc-setup](assets/standalone-apigee-envoy-opdk-edge.png)
 
-1. **Set environment variables.**
+1. **Set environment variables for OPDK.**
     ```bash
     export MGMT_HOST=<Mgmt host of the opdk platform, including the http/https and port number>
     export APIGEE_USER=<Mgmt host credential, username>
@@ -97,7 +97,18 @@ The Apigee Envoy Quickstart Toolkit sets up the Envoy proxies with Apigee adapte
     export APIGEE_REMOTE_SRVC_CLI_VERSION=<version for Apigee Remote Service cli for Envoy>
     export APIGEE_REMOTE_SRVC_ENVOY_VERSION=<version for Apigee Remote Service for Envoy>
     ```
-    
+
+1. **Set environment variables for EDGE.**
+    ```bash
+    export MGMT_HOST=<Mgmt host of the opdk platform, including the http/https and port number>
+    export APIGEE_USER=<Mgmt host credential, username>
+    export APIGEE_PASS=<Mgmt host credential, password>
+    export APIGEE_ORG=<apigee-org>
+    export APIGEE_ENV=<apigee-env>
+    export APIGEE_REMOTE_SRVC_CLI_VERSION=<version for Apigee Remote Service cli for Envoy>
+    export APIGEE_REMOTE_SRVC_ENVOY_VERSION=<version for Apigee Remote Service for Envoy>
+    ```
+
 1. **Download the Apigee Envoy PoC Toolkit binary.** 
     ```bash
     mkdir apigee-envoy-toolkit && cd "$_"
