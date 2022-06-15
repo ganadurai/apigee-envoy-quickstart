@@ -18,11 +18,13 @@ set -e
 
 testHttpbin() {
   printf "\n\nTesting the httpbin application\n"
-  kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl \
+  RESULT=1
+  OUTPUT=$(kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl \
   --restart=Never curl --overrides='{"apiVersion": "v1", "metadata": {"annotations":{"sidecar.istio.io/inject": "false"}}}' \
-  -- curl -i httpbin.apigee.svc.cluster.local/headers -H "x-api-key: $CONSUMER_KEY" | grep 200 \
-  2>&1 >/dev/null
-  RESULT=$?
+  -- curl -i httpbin.apigee.svc.cluster.local/headers -H "x-api-key: $CONSUMER_KEY" | grep 200)
+  if [[ "$OUTPUT" == *"200"* ]]; then
+      RESULT=0
+  fi
   return $RESULT
 }
 
@@ -51,14 +53,13 @@ printf "\n"
 
 testHttpbin;
 RESULT=$?
-printf "\nCurl test command result - $RESULT\n"
 
 counter=0;
-while [ $RESULT -ne 0 ] && [ $counter -lt 3 ]; do
-  printf "\n\nTesting the httpbin application $counter\n"
+while [ $RESULT -ne 0 ] $counter -lt 5 ]; do
+  printf "\n\nTesting the httpbin application $counter of 5\n"
+  sleep 20
   testHttpbin;
   RESULT=$?
-  sleep 20
   counter=$((counter+1))
 done
 
