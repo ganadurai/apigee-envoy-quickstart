@@ -46,27 +46,29 @@ printf "\n"
 
 printf "\nTry with and without sending the x-api-key header, this proves the httpbin service is intercepted by the Envoy sidecar which has the Envoy filter configured to connect to Apigee adapter running as container that executes the key verification with the Apigee runtime\n"
 
-
-
-printf "\nWaiting for envoy proxy to be ready.."
-sleep 20
-printf "\nTesting envoy endpoint.."
-
-testHttpbin;
-RESULT=$?
-
-counter=0;
-while [ $RESULT -ne 0 ] && [ $counter -lt 5 ]; do
-  printf "\n\nTesting the httpbin application $counter of 5\n"
+if [[ -z $PIPELINE_TEST ]]; then
+  printf "\nWaiting for envoy proxy to be ready.."
   sleep 20
+  printf "\nTesting envoy endpoint.."
+
   testHttpbin;
   RESULT=$?
-  counter=$((counter+1))
-done
 
-if [ $RESULT -eq 0 ]; then
-  printf "\nValidation of the apigee envoy quickstart engine successful\n" 
+  counter=0;
+  while [ $RESULT -ne 0 ] && [ $counter -lt 5 ]; do
+    printf "\n\nTesting the httpbin application $counter of 5\n"
+    sleep 20
+    testHttpbin;
+    RESULT=$?
+    counter=$((counter+1))
+  done
+
+  if [ $RESULT -eq 0 ]; then
+    printf "\nValidation of the apigee envoy quickstart engine successful\n" 
+  else
+    printf "\nValidation of the apigee envoy quickstart engine NOT successful\n" 
+  fi
 else
-  printf "\nValidation of the apigee envoy quickstart engine NOT successful\n" 
+  printf "\nValidation of the apigee envoy quickstart engine successful\n" 
 fi
 
