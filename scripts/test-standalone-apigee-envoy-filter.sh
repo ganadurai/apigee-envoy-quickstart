@@ -37,7 +37,7 @@ export CONSUMER_KEY=$(curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"  \
 
 printf "\nWait for few minutes for the Envoy and Apigee adapter to have the setup completed. Then try the below command"
 
-printf "\n"
+printf "\n\n"
 
 echo curl -i http://localhost:8080/headers -H "\"Host: httpbin.org\""  \
 -H "\"x-api-key: $CONSUMER_KEY\""

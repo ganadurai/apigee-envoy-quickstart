@@ -39,7 +39,7 @@ export CONSUMER_KEY=$(curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"  \
 
 printf "\nWait for few minutes for the Envoy and Apigee adapter to have the setup completed. Then try the below command"
 
-printf "\n"
+printf "\n\n"
 
 echo kubectl --context=${CLUSTER_CTX} -n $NAMESPACE run -it --rm --image=curlimages/curl --restart=Never curl \
     --overrides=\'{\"apiVersion\":\"v1\", \"metadata\":{\"annotations\": { \"sidecar.istio.io/inject\":\"false\" } } }\' \
