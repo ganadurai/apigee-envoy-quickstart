@@ -14,10 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export APIGEE_ORG=amer-poc10
-export APIGEE_ENV=test
-
 export ENVOY_HOME=/tmp
+
+export PIPELINE_TEST="true"
+
 export APIGEE_REMOTE_SRVC_CLI_VERSION=2.0.5
 export APIGEE_REMOTE_SRVC_ENVOY_VERSION=2.0.5
 
