@@ -44,7 +44,7 @@ echo curl -i http://localhost:8080/headers -H "\"Host: httpbin.org\""  \
 
 printf "\n"
 
-printf "\nTry with and without sending the x-api-key header. This proves the httpbin service is intercepted by the Envoy sidecar which has the Envoy filter configured to connect to Apigee adapter running as container that executes the key verification with the Apigee runtime\n"
+printf "\nTry with and without sending the x-api-key header. This proves the httpbin target is protected by the Envoy container which has the Envoy filter configured to connect to Apigee adapter running as container that executes the key verification with the Apigee runtime\n"
 
 if [[ -z $PIPELINE_TEST ]]; then
   printf "\nWaiting for envoy proxy to be ready.."
