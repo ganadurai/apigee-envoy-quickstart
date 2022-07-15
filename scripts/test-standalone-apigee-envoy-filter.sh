@@ -69,6 +69,8 @@ if [[ -z $PIPELINE_TEST ]]; then
     printf "\nValidation of the apigee envoy quickstart engine NOT successful\n" 
   fi
 else
-  printf "\nValidation of the apigee envoy quickstart engine successful\n" 
+  printf "\n\n"
+  echo "Validation of the apigee envoy quickstart engine successful"
+  printf "\n\n" 
 fi
 
