@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export ENVOY_HOME=/tmp
+export ENVOY_HOME=/home
 
 export PIPELINE_TEST="true"
 
