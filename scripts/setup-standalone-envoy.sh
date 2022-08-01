@@ -71,17 +71,19 @@ else
   echo "Creating Dockerfile to copy the config files for envoy"
   cat << EOF >  "$ENVOY_HOME/Dockerfile-aekitctl"
 FROM envoyproxy/envoy:v1.21-latest
+RUN apt-get update
+RUN apt-get -y install curl
 COPY ./apigee-remote-service-cli/envoy-configs-and-samples/envoy-config.yaml /etc/envoy/envoy.yaml
 EOF
 
   docker build -f "$ENVOY_HOME/Dockerfile-aekitctl" \
-  -t apigee/devrel-envoy-proxy:latest "$ENVOY_HOME"
+  -t apigee/devrel-envoyproxy:latest "$ENVOY_HOME"
 
   rm  "$ENVOY_HOME/Dockerfile-aekitctl"
 
     nohup docker run --net=host \
     -p 8080:8080 \
-    --rm envoyproxy/envoy:v1.21-latest \
+    --rm apigee/devrel-envoyproxy:latest \
     -c /etc/envoy/envoy.yaml \
     --log-path /tmp/custom.log \
     --log-level debug &

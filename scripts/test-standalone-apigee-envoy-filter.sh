@@ -26,6 +26,21 @@ testHttpbin() {
     return $RESULT
 }
 
+testCIRunnerHttpbin() {
+    printf "\nTesting deployed envoy proxy with apigee adapter for CI runner build\n"
+    envoyproxy_cntnr_name=$(docker ps -a --format "{{ json . }}" | \
+                            jq ' select( .Image | contains("envoyproxy")) | .Names ' | \
+                            tr -d '"')
+    RESULT=1
+    OUTPUT=$(docker exec -it $envoyproxy_cntnr_name curl -i http://localhost:8080/headers -H 'Host: httpbin.org' \
+        -H "x-api-key: $CONSUMER_KEY" | grep HTTP)
+    printf "\n$OUTPUT"
+    if [[ "$OUTPUT" == *"200"* ]]; then
+        RESULT=0
+    fi
+    return $RESULT
+}
+
 printf "\nExtract the consumer key\n"
 
 export CONSUMER_KEY=$(curl -H "Authorization: ${TOKEN_TYPE} ${TOKEN}"  \
@@ -46,31 +61,34 @@ printf "\n"
 
 printf "\nTry with and without sending the x-api-key header. This proves the httpbin target is protected by the Envoy container which has the Envoy filter configured to connect to Apigee adapter running as container that executes the key verification with the Apigee runtime\n"
 
+
+printf "\nWaiting for envoy proxy to be ready.."
+sleep 20
+printf "\nTesting envoy endpoint.."
+
 if [[ -z $PIPELINE_TEST ]]; then
-  printf "\nWaiting for envoy proxy to be ready.."
-  sleep 20
-  printf "\nTesting envoy endpoint.."
-
   testHttpbin;
-  RESULT=$?
-
-  counter=0;
-  while [ $RESULT -ne 0 ] && [ $counter -lt 5 ]; do
-    printf "\n\nTesting the httpbin application $counter of 5\n"
-    sleep 20
-    testHttpbin;
-    RESULT=$?
-    counter=$((counter+1))
-  done
-
-  if [ $RESULT -eq 0 ]; then
-    printf "\nValidation of the apigee envoy quickstart engine successful\n" 
-  else
-    printf "\nValidation of the apigee envoy quickstart engine NOT successful\n" 
-  fi
 else
-  printf "\n\n"
-  echo "Validation of the apigee envoy quickstart engine successful"
-  printf "\n\n" 
+  testCIRunnerHttpbin
+fi
+RESULT=$?
+
+counter=0;
+while [ $RESULT -ne 0 ] && [ $counter -lt 5 ]; do
+  printf "\n\nTesting the httpbin application $counter of 5\n"
+  sleep 20
+  if [[ -z $PIPELINE_TEST ]]; then
+    testHttpbin;
+  else
+    testCIRunnerHttpbin
+  fi
+  RESULT=$?
+  counter=$((counter+1))
+done
+
+if [ $RESULT -eq 0 ]; then
+  printf "\nValidation of the apigee envoy quickstart engine successful\n" 
+else
+  printf "\nValidation of the apigee envoy quickstart engine NOT successful\n" 
 fi
 
