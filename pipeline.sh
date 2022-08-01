@@ -27,6 +27,9 @@ printf "Running edge envoy cleanup"
 printf "Running edge envoy setup"
 ./aekitctl.sh --type standalone-apigee-envoy --action install --platform edge
 
+printf "Running edge envoy cleanup"
+./aekitctl.sh --type standalone-apigee-envoy --action delete --platform edge
+
 
 
 
